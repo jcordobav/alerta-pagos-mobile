@@ -1,30 +1,56 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:alerta_pagos/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:alerta_pagos/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('filters pending and upcoming bills on the same HomePage', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.platformDispatcher.textScaleFactorTestValue = 1;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(const AlertaPagosApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Energía'), findsOneWidget);
+    expect(find.text('Internet'), findsOneWidget);
+    expect(find.text('Agua'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey('home-filter-Próximos')));
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Energía'), findsOneWidget);
+    expect(find.text('Internet'), findsOneWidget);
+    expect(find.text('Agua'), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('home-filter-Pendientes')));
+    await tester.pumpAndSettle();
+    expect(find.text('Agua'), findsOneWidget);
+  });
+
+  testWidgets('bottom navigation opens placeholders and returns home', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    tester.platformDispatcher.textScaleFactorTestValue = 1;
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(const AlertaPagosApp());
+
+    await tester.tap(find.byKey(const ValueKey('bottom-nav-1')));
+    await tester.pumpAndSettle();
+    expect(find.text('Historial'), findsWidgets);
+
+    await tester.tap(find.byKey(const ValueKey('bottom-nav-2')));
+    await tester.pumpAndSettle();
+    expect(find.text('Agregar pago'), findsWidgets);
+
+    await tester.tap(find.byKey(const ValueKey('bottom-nav-3')));
+    await tester.pumpAndSettle();
+    expect(find.text('Perfil'), findsWidgets);
+
+    await tester.tap(find.byKey(const ValueKey('bottom-nav-0')));
+    await tester.pumpAndSettle();
+    expect(find.text('Próximos pagos'), findsOneWidget);
   });
 }
