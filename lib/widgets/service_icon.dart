@@ -4,9 +4,10 @@ import '../models/bill.dart';
 import '../theme/app_colors.dart';
 
 class ServiceIcon extends StatelessWidget {
-  const ServiceIcon({super.key, required this.serviceType});
+  const ServiceIcon({super.key, required this.serviceType, this.size = 32});
 
   final ServiceType serviceType;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +30,15 @@ class ServiceIcon extends StatelessWidget {
     };
 
     return Container(
-      width: 32,
-      height: 32,
+      width: size,
+      height: size,
       decoration: BoxDecoration(
         color: background,
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.outline),
       ),
       alignment: Alignment.center,
-      child: Icon(icon, size: 20, color: color),
+      child: Icon(icon, size: size * 3 / 7, color: color),
     );
   }
 }

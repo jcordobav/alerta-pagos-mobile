@@ -47,4 +47,55 @@ abstract final class AppTextStyles {
     height: 16 / 11,
     fontWeight: FontWeight.w600,
   );
+  static const TextStyle infoLabel = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 14,
+    height: 19 / 14,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle infoValue = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 14,
+    height: 19 / 14,
+  );
+  static const TextStyle optionsTitle = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 18,
+    height: 24 / 18,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle actionButton = TextStyle(
+    fontSize: 15,
+    height: 20 / 15,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle alarmTitle = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 36,
+    height: 49 / 36,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle alarmSupport = TextStyle(
+    color: AppColors.textSecondary,
+    fontSize: 18,
+    height: 24 / 18,
+  );
+  static const TextStyle alarmServiceName = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 28,
+    height: 38 / 28,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle alarmLabel = TextStyle(
+    color: AppColors.textSecondary,
+    fontSize: 15,
+    height: 20 / 15,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle alarmAmount = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 30,
+    height: 41 / 30,
+    fontWeight: FontWeight.w600,
+  );
 }

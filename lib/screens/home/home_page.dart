@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../data/demo_bills.dart';
 import '../../models/bill.dart';
+import '../../services/alarm_timer_controller.dart';
+import '../invoice_detail/invoice_detail_page.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../widgets/app_header.dart';
@@ -10,7 +13,9 @@ import '../../widgets/home_filter_tabs.dart';
 enum HomeFilter { pending, upcoming }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.alarmTimerController});
+
+  final AlarmTimerController alarmTimerController;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,44 +24,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   HomeFilter _selectedFilter = HomeFilter.pending;
 
-  static const _bills = <Bill>[
-    Bill(
-      serviceName: 'Energía',
-      amount: r'$72.300',
-      dueDate: '22 Sep',
-      status: BillStatus.pending,
-      serviceType: ServiceType.energy,
-      isUpcoming: true,
-    ),
-    Bill(
-      serviceName: 'Internet',
-      amount: r'$89.900',
-      dueDate: '28 Sep',
-      status: BillStatus.pending,
-      serviceType: ServiceType.internet,
-      isUpcoming: true,
-    ),
-    Bill(
-      serviceName: 'Agua',
-      amount: r'$58.200',
-      dueDate: '02 Oct',
-      status: BillStatus.pending,
-      serviceType: ServiceType.water,
-      isUpcoming: false,
-    ),
-  ];
-
   List<Bill> get _visibleBills => switch (_selectedFilter) {
     HomeFilter.pending =>
-      _bills
+      demoBills
           .where((bill) => bill.status == BillStatus.pending)
           .toList(growable: false),
     HomeFilter.upcoming =>
-      _bills.where((bill) => bill.isUpcoming).toList(growable: false),
+      demoBills.where((bill) => bill.isUpcoming).toList(growable: false),
   };
 
   void _markAsPaid(Bill bill) {
     debugPrint('Marcar como pagado: ${bill.serviceName}');
+  }
+
+  void _openDetail(Bill bill) {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(builder: (_) => DetailPage(bill: bill)),
+    );
   }
 
   @override
@@ -76,6 +61,7 @@ class _HomePageState extends State<HomePage> {
                     'Próximos pagos',
                     style: AppTextStyles.sectionTitle,
                   ),
+                  const SizedBox(height: 4),
                   const SizedBox(height: 16),
                   HomeFilterTabs(
                     selectedFilter: _selectedFilter,
@@ -96,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                           key: ValueKey(bill.serviceName),
                           bill: bill,
                           onMarkPaid: _markAsPaid,
+                          onTap: () => _openDetail(bill),
                         );
                       },
                     ),
@@ -107,5 +94,12 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  String _formatCountdown(int seconds) {
+    final minutes = seconds ~/ 60;
+    final remainingSeconds = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:'
+        '${remainingSeconds.toString().padLeft(2, '0')}';
   }
 }

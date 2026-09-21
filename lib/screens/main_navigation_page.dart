@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../data/demo_bills.dart';
+import '../services/alarm_timer_controller.dart';
 import '../widgets/app_bottom_navigation.dart';
+import 'alarm/alarm_page.dart';
 import 'home/home_page.dart';
 import 'placeholder_page.dart';
 
 class MainNavigationPage extends StatefulWidget {
-  const MainNavigationPage({super.key});
+  const MainNavigationPage({super.key, this.alarmSeconds = 60});
+
+  final int alarmSeconds;
 
   @override
   State<MainNavigationPage> createState() => _MainNavigationPageState();
@@ -13,20 +18,61 @@ class MainNavigationPage extends StatefulWidget {
 
 class _MainNavigationPageState extends State<MainNavigationPage> {
   int _selectedIndex = 0;
+  bool _isAlarmVisible = false;
+  late final AlarmTimerController _alarmTimerController;
 
-  static const _pages = <Widget>[
-    HomePage(),
-    PlaceholderPage(title: 'Historial'),
-    PlaceholderPage(title: 'Agregar pago'),
-    PlaceholderPage(title: 'Perfil'),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _alarmTimerController = AlarmTimerController(
+      durationSeconds: widget.alarmSeconds,
+      onAlarmTriggered: _showAlarm,
+    )..start();
+  }
+
+  Future<void> _showAlarm() async {
+    if (!mounted || _isAlarmVisible) return;
+
+    _isAlarmVisible = true;
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => AlarmPage(
+          bill: energyBill,
+          onDismiss: _closeAlarm,
+          onResetTimer: _alarmTimerController.reset,
+        ),
+      ),
+    );
+
+    if (!mounted) return;
+    _isAlarmVisible = false;
+    _alarmTimerController.reset();
+  }
+
+  void _closeAlarm(BuildContext alarmContext) {
+    _alarmTimerController.reset();
+    Navigator.of(alarmContext).pop();
+  }
+
+  @override
+  void dispose() {
+    _alarmTimerController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final pages = <Widget>[
+      HomePage(alarmTimerController: _alarmTimerController),
+      const PlaceholderPage(title: 'Historial'),
+      const PlaceholderPage(title: 'Agregar pago'),
+      const PlaceholderPage(title: 'Perfil'),
+    ];
+
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: IndexedStack(index: _selectedIndex, children: _pages),
+        child: IndexedStack(index: _selectedIndex, children: pages),
       ),
       bottomNavigationBar: SafeArea(
         top: false,

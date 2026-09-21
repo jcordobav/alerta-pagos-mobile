@@ -6,7 +6,9 @@ import 'theme/app_colors.dart';
 void main() => runApp(const AlertaPagosApp());
 
 class AlertaPagosApp extends StatelessWidget {
-  const AlertaPagosApp({super.key});
+  const AlertaPagosApp({super.key, this.alarmSeconds = 60});
+
+  final int alarmSeconds;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class AlertaPagosApp extends StatelessWidget {
           error: AppColors.error,
         ),
       ),
-      home: const MainNavigationPage(),
+      home: MainNavigationPage(alarmSeconds: alarmSeconds),
     );
   }
 }

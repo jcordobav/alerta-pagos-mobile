@@ -10,6 +10,7 @@ class Bill {
     required this.status,
     required this.serviceType,
     required this.isUpcoming,
+    required this.companyName,
   });
 
   final String serviceName;
@@ -18,4 +19,5 @@ class Bill {
   final BillStatus status;
   final ServiceType serviceType;
   final bool isUpcoming;
+  final String companyName;
 }
