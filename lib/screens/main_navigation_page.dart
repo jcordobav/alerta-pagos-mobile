@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 
 import '../data/demo_bills.dart';
 import '../services/alarm_timer_controller.dart';
+import '../services/mock_payment_history_service.dart';
+import '../services/payment_history_service.dart';
 import '../widgets/app_bottom_navigation.dart';
 import 'alarm/alarm_page.dart';
+import 'history/history_page.dart';
 import 'home/home_page.dart';
 import 'placeholder_page.dart';
 
 class MainNavigationPage extends StatefulWidget {
-  const MainNavigationPage({super.key, this.alarmSeconds = 60});
+  const MainNavigationPage({
+    super.key,
+    this.alarmSeconds = 60,
+    this.paymentHistoryService = const MockPaymentHistoryService(),
+  });
 
   final int alarmSeconds;
+  final PaymentHistoryService paymentHistoryService;
 
   @override
   State<MainNavigationPage> createState() => _MainNavigationPageState();
@@ -64,7 +72,10 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   Widget build(BuildContext context) {
     final pages = <Widget>[
       HomePage(alarmTimerController: _alarmTimerController),
-      const PlaceholderPage(title: 'Historial'),
+      HistoryPage(
+        paymentHistoryService: widget.paymentHistoryService,
+        isActive: _selectedIndex == 1,
+      ),
       const PlaceholderPage(title: 'Agregar pago'),
       const PlaceholderPage(title: 'Perfil'),
     ];

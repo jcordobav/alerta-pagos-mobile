@@ -69,6 +69,28 @@ abstract final class AppTextStyles {
     height: 20 / 15,
     fontWeight: FontWeight.w500,
   );
+  static const TextStyle historySectionTitle = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 20,
+    height: 27 / 20,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle paidAmount = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 15,
+    height: 20 / 15,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle paidDate = TextStyle(
+    color: AppColors.textSecondary,
+    fontSize: 13,
+    height: 18 / 13,
+  );
+  static const TextStyle stateMessage = TextStyle(
+    color: AppColors.textSecondary,
+    fontSize: 14,
+    height: 20 / 14,
+  );
   static const TextStyle alarmTitle = TextStyle(
     color: AppColors.textPrimary,
     fontSize: 36,
