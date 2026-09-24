@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/main_navigation_page.dart';
 import 'theme/app_colors.dart';
@@ -15,6 +16,9 @@ class AlertaPagosApp extends StatelessWidget {
     return MaterialApp(
       title: 'Alerta Pagos',
       debugShowCheckedModeBanner: false,
+      locale: const Locale('es', 'CO'),
+      supportedLocales: const [Locale('es', 'CO')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.surface,
