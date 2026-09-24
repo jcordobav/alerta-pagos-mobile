@@ -107,6 +107,28 @@ abstract final class AppTextStyles {
     height: 20 / 15,
     fontWeight: FontWeight.w600,
   );
+  static const TextStyle profileName = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 28,
+    height: 38 / 28,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle profileUsername = TextStyle(
+    color: AppColors.textSecondary,
+    fontSize: 16,
+    height: 22 / 16,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle profileEmail = TextStyle(
+    color: AppColors.textSecondary,
+    fontSize: 14,
+    height: 19 / 14,
+  );
+  static const TextStyle profileWelcome = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 20,
+    height: 27 / 20,
+  );
   static const TextStyle alarmTitle = TextStyle(
     color: AppColors.textPrimary,
     fontSize: 36,
