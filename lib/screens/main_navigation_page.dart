@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../data/demo_bills.dart';
 import '../services/alarm_timer_controller.dart';
+import '../services/manual_payment_service.dart';
+import '../services/mock_manual_payment_service.dart';
 import '../services/mock_payment_history_service.dart';
 import '../services/payment_history_service.dart';
 import '../widgets/app_bottom_navigation.dart';
+import 'add_payment/add_payment_page.dart';
 import 'alarm/alarm_page.dart';
 import 'history/history_page.dart';
 import 'home/home_page.dart';
@@ -15,10 +18,12 @@ class MainNavigationPage extends StatefulWidget {
     super.key,
     this.alarmSeconds = 60,
     this.paymentHistoryService = const MockPaymentHistoryService(),
+    this.manualPaymentService = const MockManualPaymentService(),
   });
 
   final int alarmSeconds;
   final PaymentHistoryService paymentHistoryService;
+  final ManualPaymentService manualPaymentService;
 
   @override
   State<MainNavigationPage> createState() => _MainNavigationPageState();
@@ -76,7 +81,10 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         paymentHistoryService: widget.paymentHistoryService,
         isActive: _selectedIndex == 1,
       ),
-      const PlaceholderPage(title: 'Agregar pago'),
+      AddPaymentPage(
+        manualPaymentService: widget.manualPaymentService,
+        onCancel: () => setState(() => _selectedIndex = 0),
+      ),
       const PlaceholderPage(title: 'Perfil'),
     ];
 

@@ -91,6 +91,22 @@ abstract final class AppTextStyles {
     fontSize: 14,
     height: 20 / 14,
   );
+  static const TextStyle formHint = TextStyle(
+    color: AppColors.textSecondary,
+    fontSize: 14,
+    height: 19 / 14,
+  );
+  static const TextStyle currencyPrefix = TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 16,
+    height: 22 / 16,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle formButton = TextStyle(
+    fontSize: 15,
+    height: 20 / 15,
+    fontWeight: FontWeight.w600,
+  );
   static const TextStyle alarmTitle = TextStyle(
     color: AppColors.textPrimary,
     fontSize: 36,

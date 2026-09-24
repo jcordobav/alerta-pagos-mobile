@@ -43,7 +43,7 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('bottom-nav-2')));
     await tester.pumpAndSettle();
-    expect(find.text('Agregar pago'), findsWidgets);
+    expect(find.text('Agregar pago manual'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('bottom-nav-3')));
     await tester.pumpAndSettle();
