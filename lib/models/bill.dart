@@ -1,4 +1,4 @@
-enum ServiceType { energy, internet, water }
+enum ServiceType { energy, internet, water, gas }
 
 enum BillStatus { pending, paid, overdue }
 

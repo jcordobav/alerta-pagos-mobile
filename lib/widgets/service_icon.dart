@@ -27,6 +27,11 @@ class ServiceIcon extends StatelessWidget {
         AppColors.primary,
         AppColors.primaryContainer,
       ),
+      ServiceType.gas => (
+        Icons.local_fire_department_outlined,
+        AppColors.error,
+        const Color(0xFFFFEBEE),
+      ),
     };
 
     return Container(
